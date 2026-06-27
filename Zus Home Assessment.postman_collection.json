@@ -1,0 +1,799 @@
+{
+  "info": {
+    "_postman_id": "070928ee-dddb-4ad9-9a2c-c7d42df63c71",
+    "name": "Zus Home Assessment",
+    "description": "This collection serve for zus home assessment. It only pointed to localhost, you can run this through postman desktop or run in web browser with postman agent. Make sure the DB and go server had been setup and run (as project README mentioned) before testing out this API.\n\nThe APIs included:\n\nMenu\n\n- `GET /menu`\n    \n- `GET /menu/items/{id}`\n    \n- `PATCH /menu/items/{id}`\n    \n\nOrder\n\n- `POST /orders`\n    \n- `GET /orders/{id}`\n    \n- `PATCH /orders/{id}/status`",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "36891332"
+  },
+  "item": [
+    {
+      "name": "Menu",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}:8080/menu",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "8080",
+          "path": [
+            "menu"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "success example",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}:8080/menu",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "menu"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:37:40 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "596"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"categories\": [\n        {\n            \"id\": \"1\",\n            \"name\": \"Coffee\",\n            \"sortOrder\": 1,\n            \"items\": [\n                {\n                    \"id\": \"2\",\n                    \"categoryId\": \"1\",\n                    \"name\": \"Americano\",\n                    \"description\": \"Espresso with hot water.\",\n                    \"priceCents\": 700,\n                    \"currency\": \"MYR\",\n                    \"availability\": \"in_stock\"\n                },\n                {\n                    \"id\": \"1\",\n                    \"categoryId\": \"1\",\n                    \"name\": \"Spanish Latte\",\n                    \"description\": \"Espresso with textured milk and condensed milk.\",\n                    \"priceCents\": 950,\n                    \"currency\": \"MYR\",\n                    \"availability\": \"in_stock\"\n                }\n            ]\n        },\n        {\n            \"id\": \"2\",\n            \"name\": \"Food\",\n            \"sortOrder\": 2,\n            \"items\": [\n                {\n                    \"id\": \"3\",\n                    \"categoryId\": \"2\",\n                    \"name\": \"Butter Croissant\",\n                    \"description\": \"Flaky pastry with butter.\",\n                    \"priceCents\": 850,\n                    \"currency\": \"MYR\",\n                    \"availability\": \"in_stock\"\n                }\n            ]\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Menu Item/:id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}:8080/menu/items/1",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "8080",
+          "path": [
+            "menu",
+            "items",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "success response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}:8080/menu/items/1",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "menu",
+                "items",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:38:17 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "175"
+            }
+          ],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\n    \"id\": \"1\",\n    \"categoryId\": \"1\",\n    \"name\": \"Spanish Latte\",\n    \"description\": \"Espresso with textured milk and condensed milk.\",\n    \"priceCents\": 950,\n    \"currency\": \"MYR\",\n    \"availability\": \"in_stock\"\n}"
+        },
+        {
+          "name": "fail example(not found)",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}:8080/menu/items/100",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "menu",
+                "items",
+                "100"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:40:43 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "62"
+            }
+          ],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\n    \"error\": {\n        \"code\": \"not_found\",\n        \"message\": \"resource not found\"\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Menu Item/:id",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"availability\": \"out_of_stock\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}:8080/menu/items/1",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "8080",
+          "path": [
+            "menu",
+            "items",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "success example",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"availability\": \"out_of_stock\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}:8080/menu/items/1",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "menu",
+                "items",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:39:53 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "179"
+            }
+          ],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\n    \"id\": \"1\",\n    \"categoryId\": \"1\",\n    \"name\": \"Spanish Latte\",\n    \"description\": \"Espresso with textured milk and condensed milk.\",\n    \"priceCents\": 950,\n    \"currency\": \"MYR\",\n    \"availability\": \"out_of_stock\"\n}"
+        },
+        {
+          "name": "fail example(validation error)",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"availability\": \"?\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}:8080/menu/items/1",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "menu",
+                "items",
+                "1"
+              ]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:40:13 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "96"
+            }
+          ],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\n    \"error\": {\n        \"code\": \"validation_error\",\n        \"message\": \"availability must be in_stock or out_of_stock\"\n    }\n}"
+        },
+        {
+          "name": "fail example(not found)",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"availability\": \"out_of_stock\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}:8080/menu/items/100",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "menu",
+                "items",
+                "100"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:41:29 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "62"
+            }
+          ],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\n    \"error\": {\n        \"code\": \"not_found\",\n        \"message\": \"resource not found\"\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"items\": [\n        {\n            \"menuItemId\": \"1\",\n            \"quantity\": 1\n        }\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}:8080/orders",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "8080",
+          "path": [
+            "orders"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "fail example(no item)",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}:8080/orders",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "orders"
+              ]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:43:18 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "68"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"error\": {\n        \"code\": \"validation_error\",\n        \"message\": \"items is required\"\n    }\n}"
+        },
+        {
+          "name": "fail example(item out of stock)",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"items\": [\n        {\n            \"menuItemId\": \"1\",\n            \"quantity\": 1\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}:8080/orders",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "orders"
+              ]
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:48:09 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "75"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"error\": {\n        \"code\": \"item_unavailable\",\n        \"message\": \"menu item unavailable: 1\"\n    }\n}"
+        },
+        {
+          "name": "success example",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"items\": [\n        {\n            \"menuItemId\": \"1\",\n            \"quantity\": 1\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}:8080/orders",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "orders"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:54:32 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "285"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"id\": \"2\",\n    \"status\": \"received\",\n    \"subtotalCents\": 950,\n    \"totalCents\": 950,\n    \"currency\": \"MYR\",\n    \"createdAt\": \"2026-06-27T15:54:31.737758Z\",\n    \"updatedAt\": \"2026-06-27T15:54:31.737758Z\",\n    \"items\": [\n        {\n            \"id\": \"2\",\n            \"menuItemId\": \"1\",\n            \"name\": \"Spanish Latte\",\n            \"unitPriceCents\": 950,\n            \"quantity\": 1,\n            \"lineTotalCents\": 950\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Orders/:id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}:8080/orders/1",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "8080",
+          "path": [
+            "orders",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "success example",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}:8080/orders/1",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "orders",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:54:24 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "285"
+            }
+          ],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\n    \"id\": \"1\",\n    \"status\": \"received\",\n    \"subtotalCents\": 950,\n    \"totalCents\": 950,\n    \"currency\": \"MYR\",\n    \"createdAt\": \"2026-06-27T15:48:45.927896Z\",\n    \"updatedAt\": \"2026-06-27T15:48:45.927896Z\",\n    \"items\": [\n        {\n            \"id\": \"1\",\n            \"menuItemId\": \"1\",\n            \"name\": \"Spanish Latte\",\n            \"unitPriceCents\": 950,\n            \"quantity\": 1,\n            \"lineTotalCents\": 950\n        }\n    ]\n}"
+        },
+        {
+          "name": "fail example(not found)",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}:8080/orders/100",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "orders",
+                "100"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:56:14 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "62"
+            }
+          ],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\n    \"error\": {\n        \"code\": \"not_found\",\n        \"message\": \"resource not found\"\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Orders/:id/status",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"status\": \"preparing\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}:8080/orders/1/status",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "8080",
+          "path": [
+            "orders",
+            "1",
+            "status"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "success example",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"preparing\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}:8080/orders/1/status",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "orders",
+                "1",
+                "status"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:57:52 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "286"
+            }
+          ],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\n    \"id\": \"1\",\n    \"status\": \"preparing\",\n    \"subtotalCents\": 950,\n    \"totalCents\": 950,\n    \"currency\": \"MYR\",\n    \"createdAt\": \"2026-06-27T15:48:45.927896Z\",\n    \"updatedAt\": \"2026-06-27T15:57:52.675557Z\",\n    \"items\": [\n        {\n            \"id\": \"1\",\n            \"menuItemId\": \"1\",\n            \"name\": \"Spanish Latte\",\n            \"unitPriceCents\": 950,\n            \"quantity\": 1,\n            \"lineTotalCents\": 950\n        }\n    ]\n}"
+        },
+        {
+          "name": "fail example(not found)",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"preparing\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}:8080/orders/100/status",
+              "host": [
+                "{{host}}"
+              ],
+              "port": "8080",
+              "path": [
+                "orders",
+                "100",
+                "status"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 27 Jun 2026 15:58:15 GMT"
+            },
+            {
+              "key": "Content-Length",
+              "value": "62"
+            }
+          ],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\n    \"error\": {\n        \"code\": \"not_found\",\n        \"message\": \"resource not found\"\n    }\n}"
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "host",
+      "value": ""
+    }
+  ]
+}
