@@ -33,6 +33,7 @@ Compose starts PostgreSQL, Kafka, runs migration and seed jobs, then starts the 
 ```sh
 docker compose up --build
 ```
+
 The worker runs in the same Compose stack and logs a structured `order summary` record whenever a new order is placed.
 
 ---
@@ -75,17 +76,17 @@ I used raw SQL with `pgx` because the model is small, the queries are straightfo
 ### Tables
 
 - Categories
-Stores menu categories like Coffee, Food, etc. Controls display order and whether a category is active.
-Key fields: id, name, sort_order, active
+  - Stores menu categories like Coffee, Food, etc. Controls display order and whether a category is active.
+  - Key fields: id, name, sort_order, active
 - Menu_items
-Stores individual menu items under each category (e.g. Latte, Croissant). Includes pricing and availability status.
-Key fields: id, category_id, name, price_cents, availability, active
+  - Stores individual menu items under each category (e.g. Latte, Croissant). Includes pricing and availability status.
+  - Key fields: id, category_id, name, price_cents, availability, active
 - Orders
-Stores customer orders with status tracking and total pricing.
-Key fields: id, status, subtotal_cents, total_cents, currency
+  - Stores customer orders with status tracking and total pricing.
+  - Key fields: id, status, subtotal_cents, total_cents, currency
 - Order_items
-Stores items inside each order (line items with snapshot of product data).
-Key fields: id, order_id, menu_item_id, name, unit_price_cents, quantity, line_total_cents
+  - Stores items inside each order (line items with snapshot of product data).
+  - Key fields: id, order_id, menu_item_id, name, unit_price_cents, quantity, line_total_cents
 
 ---
 
@@ -98,19 +99,20 @@ Key fields: id, order_id, menu_item_id, name, unit_price_cents, quantity, line_t
 ### 2. Versioning
 
 If a mobile client already consumed `GET /menu` and I needed to make a breaking response-shape change: 
+
 > I would keep the existing endpoint stable and add a versioned route such as `GET /v2/menu`. For mobile clients, URL versioning is easy to observe, document, and support during a gradual rollout. I would keep both versions active until telemetry showed old client usage had dropped to an acceptable level.
 
 ### 3. What I would do differently with more time
 
 With an additional two hours, I would focus on two key improvements:
 
->
->  - **Add integration tests**  
->    The most important coverage would include unavailable items, total calculation, order event publishing, and invalid status transitions. This would ensure the system behavior is correctly validated end-to-end, rather than relying only on handler-level happy path tests.
+> - **Add integration tests**  
+> The most important coverage would include unavailable items, total calculation, order event publishing, and invalid status transitions. This would ensure the system behavior is correctly validated end-to-end, rather than relying only on handler-level happy path tests.
 
->  - **Improve Kafka event publishing flow**  
->    I would extend the Kafka publisher to handle order status updates as well, so that any change in order state (e.g. preparing → ready → completed) would emit corresponding events. This would make the event system more complete and better suited for downstream consumers.
+> - **Improve Kafka event publishing flow**  
+> I would extend the Kafka publisher to handle order status updates as well, so that any change in order state (e.g. preparing → ready → completed) would emit corresponding events. This would make the event system more complete and better suited for downstream consumers.
 
 ### 4. Production gap
 
 > The largest production gap is reliable event publishing around `POST /orders`. Today the order is committed first and then the Kafka publish is attempted, which can leave the system with an order but no async event if Kafka is unavailable. Before shipping to real users, I would add idempotency keys for order creation and a transactional outbox so events are stored with the order and retried safely.
+
